@@ -28,3 +28,8 @@ Thumbs.db
 
 # Gemini
 .gemini/tmp/
+
+# Foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/
