@@ -2,41 +2,40 @@
 
 ## 📅 Last Update: 2026-05-01
 
-## ✅ Completed Tasks (Phase 1)
+## ✅ Completed Tasks
 - [x] **Smart Contract Architecture**: Implemented `MarketFactory`, `Market`, and `OutcomeToken`.
-- [x] **AMM Logic**: Developed `FixedProductMarketMaker` (FPMM) using a constant product invariant ($\prod B_i = K$).
-- [x] **Foundry Testing**: Comprehensive test suite in `Market.t.sol` covering liquidity, trading, resolution, and redemption.
-- [x] **Infrastructure**: Optimized `.gitignore`, configured `foundry.toml` with `via-ir` for complex deployments.
-- [x] **Frontend Basics**: Added `/profile` route to fix navigation errors.
-- [x] **Source Control**: Successfully pushed core logic to GitHub.
-- [x] **Backend Implementation (Issue #19 & #7)**: 
-    - [x] Setup Drizzle ORM and PostgreSQL connection.
-    - [x] Implement Auth.js (NextAuth) for user management.
-    - [x] Create API routes for Ledger system (`/wallet/balance`, `/wallet/history`).
-    - [x] Integrate PayPal SDK for coin purchases.
-    - [x] Build the Blockchain Relayer service for gasless trading.
-- [x] **Frontend "Glow-up" (Issue #10 & #11)**:
-    - [x] Redesigned `MarketCard` with a premium look and progress bars.
-    - [x] Implemented `TradeDialog` for placing bets.
-    - [x] Integrated shadcn/ui components (Dialog, Progress, Tabs, Label).
+- [x] **AMM Logic**: Developed `FixedProductMarketMaker` (FPMM) using a constant product invariant.
+- [x] **Foundry Suite**: Comprehensive tests and deployment preparation (Issue #5).
+- [x] **Backend Foundation (Issue #19 & #7)**: 
+    - [x] Node.js/PostgreSQL with Drizzle ORM.
+    - [x] NextAuth.js Integration (Credentials).
+    - [x] Atomic Coin Ledger & transaction history.
+    - [x] PayPal SDK Integration for coin purchases.
+    - [x] Blockchain Relayer (Viem) for gasless trading.
+- [x] **High-Fidelity UI Overhaul (Issue #10 & #11)**:
+    - [x] **"Obsidian" Design System**: Deep dark mode (#090A0C) with professional trading terminal aesthetic.
+    - [x] **MarketCard Redesign**: Functional trading instrument with integrated Yes/No action buttons and tabular figures.
+    - [x] **Enhanced Navigation**: Refactored sidebar with topic filters and live coin balance display.
+    - [x] **Tailwind CSS 4 Integration**: Proper PostCSS configuration for the latest CSS framework version.
 
 ## 🚀 Active / Next Tasks
 
 ### 1. Smart Contract Deployment (Issue #5)
-- [x] Install Foundry & setup environment.
-- [x] Verify build and run tests (`Market.t.sol`).
-- [x] Create `contracts/.env` template.
-- [ ] Fill `contracts/.env` with actual private keys and Amoy RPC.
-- [ ] Execute `Deploy.s.sol` on Polygon Amoy Testnet.
-- [ ] Verify contracts on Polygonscan.
+- [x] Environment and Build verified.
+- [ ] Final on-chain execution on Polygon Amoy (Requires User Keys).
 
-### 2. Web3 Integration (#8 & #12)
+### 2. Web3 Integration (Issue #8 & #12)
 - [ ] Integrate RainbowKit/wagmi for wallet connection.
-- [ ] Connect frontend to the deployed smart contracts on Amoy.
+- [ ] Connect "Connect Wallet" button to actual provider.
+
+### 3. Feature: Live Data Integration
+- [ ] Transition from Mock Data to real Backend/Subgraph API.
+- [ ] Implement live probability updates.
 
 ## 📝 Technical Notes
-- **AMM Formula**: $A_i = B_i \cdot (1 - \prod_{j \neq i} \frac{B_j}{B_j + c})$
-- **Deployment Network**: Polygon Amoy Testnet
+- **UI Architecture**: Tailwind CSS 4 + PostCSS + Shadcn/ui (Base UI).
+- **Economic Model**: Hybrid Virtual Coin Ledger -> On-chain Settlement.
 - **Key Files**: 
-    - `contracts/src/MarketFactory.sol` (Entry Point)
-    - `contracts/src/FixedProductMarketMaker.sol` (Trading Engine)
+    - `src/app/globals.css` (Design System)
+    - `src/components/market/MarketCard.tsx` (Trading UI)
+    - `src/lib/services/ledger.ts` (Financial Core)

@@ -28,26 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#090A0C] text-white`}
+        style={{ backgroundColor: '#090A0C', color: 'white', minHeight: '100vh' }}
       >
         <QueryProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="relative flex min-h-screen flex-col">
-              <Header />
-              <div className="flex flex-1">
-                <Sidebar />
-                <main className="flex-1">{children}</main>
-              </div>
-              <Footer />
+          <div className="relative flex min-h-screen flex-col">
+            <Header />
+            <div className="flex flex-1">
+              <Sidebar />
+              <main className="flex-1 overflow-hidden">{children}</main>
             </div>
-          </ThemeProvider>
+            <Footer />
+          </div>
         </QueryProvider>
       </body>
     </html>

@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "../../node_modules/tw-animate-css/dist/tw-animate.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -76,7 +75,9 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: #090A0C !important;
+    color: white !important;
+    @apply antialiased;
     font-feature-settings: "tnum" on, "lnum" on;
   }
 }
