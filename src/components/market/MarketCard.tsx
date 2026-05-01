@@ -2,7 +2,7 @@ import { Market } from "@/types/market";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { Progress, ProgressTrack, ProgressIndicator } from "@/components/ui/progress";
 import { format } from "date-fns";
 import { TrendingUp, Users } from "lucide-react";
 import { TradeDialog } from "./TradeDialog";
@@ -41,10 +41,11 @@ export function MarketCard({ market }: MarketCardProps) {
                   {option.probability}%
                 </span>
               </div>
-              <Progress 
-                value={option.probability} 
-                className={`h-1.5 bg-muted/30 ${idx === 0 ? "[&>div]:bg-emerald-500" : "[&>div]:bg-rose-500"}`}
-              />
+              <Progress value={option.probability} className="h-1.5 w-full">
+                <ProgressTrack className="bg-muted/30">
+                  <ProgressIndicator className={idx === 0 ? "bg-emerald-500" : "bg-rose-500"} />
+                </ProgressTrack>
+              </Progress>
             </div>
           ))}
         </div>

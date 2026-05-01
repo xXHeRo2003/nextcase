@@ -18,7 +18,7 @@ import { TrendingUp, Wallet } from "lucide-react";
 
 interface TradeDialogProps {
   market: Market;
-  trigger: React.ReactNode;
+  trigger: React.ReactElement;
 }
 
 export function TradeDialog({ market, trigger }: TradeDialogProps) {
@@ -36,7 +36,7 @@ export function TradeDialog({ market, trigger }: TradeDialogProps) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogTrigger render={trigger} />
       <DialogContent className="sm:max-w-[425px] border-border/50 bg-card/95 backdrop-blur-md">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-1">

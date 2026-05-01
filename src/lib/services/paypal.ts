@@ -30,7 +30,7 @@ export const COIN_CONVERSION_RATE = 100; // 1 EUR = 100 Coins
 export async function createOrder(coins: number) {
   const amount = (coins / COIN_CONVERSION_RATE).toFixed(2);
   
-  const { result } = await ordersController.ordersCreate({
+  const { body } = await ordersController.createOrder({
     body: {
       intent: CheckoutPaymentIntent.Capture,
       purchaseUnits: [
@@ -45,13 +45,13 @@ export async function createOrder(coins: number) {
     },
   });
 
-  return result;
+  return body;
 }
 
 export async function captureOrder(orderId: string) {
-  const { result } = await ordersController.ordersCapture({
+  const { body } = await ordersController.captureOrder({
     id: orderId,
   });
 
-  return result;
+  return body;
 }

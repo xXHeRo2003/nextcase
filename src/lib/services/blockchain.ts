@@ -3,21 +3,25 @@ import { privateKeyToAccount } from 'viem/accounts';
 import { polygonAmoy } from 'viem/chains';
 
 // In a real app, these would be loaded from environment variables
-const PRIVATE_KEY = (process.env.HOT_WALLET_PRIVATE_KEY as `0x${string}`) || '0x0000000000000000000000000000000000000000000000000000000000000000';
+const PRIVATE_KEY = process.env.HOT_WALLET_PRIVATE_KEY as `0x${string}`;
 const RPC_URL = process.env.AMOY_RPC_URL || 'https://rpc-amoy.polygon.technology';
-
-const account = privateKeyToAccount(PRIVATE_KEY);
 
 export const publicClient = createPublicClient({
   chain: polygonAmoy,
   transport: http(RPC_URL),
 });
 
-export const walletClient = createWalletClient({
-  account,
-  chain: polygonAmoy,
-  transport: http(RPC_URL),
-});
+export function getWalletClient() {
+  if (!PRIVATE_KEY || PRIVATE_KEY === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+    throw new Error("Hot wallet private key not configured");
+  }
+  const account = privateKeyToAccount(PRIVATE_KEY);
+  return createWalletClient({
+    account,
+    chain: polygonAmoy,
+    transport: http(RPC_URL),
+  });
+}
 
 // ABIs (Placeholder until contracts are built/deployed)
 // These should match FixedProductMarketMaker.sol
@@ -46,6 +50,7 @@ export async function buyOnChain(
   const minTokens = (tokensToBuy * 99n) / 100n; // 1% slippage
 
   // 2. Execute buy
+  const walletClient = getWalletClient();
   const hash = await walletClient.writeContract({
     address: marketAddress as Address,
     abi: FPMM_ABI,
@@ -72,6 +77,7 @@ export async function sellOnChain(
   const maxTokens = (tokenAmount * 101n) / 100n; // 1% slippage
 
   // 2. Execute sell
+  const walletClient = getWalletClient();
   const hash = await walletClient.writeContract({
     address: marketAddress as Address,
     abi: FPMM_ABI,

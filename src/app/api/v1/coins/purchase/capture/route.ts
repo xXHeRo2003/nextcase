@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { orderId } = schema.parse(body);
 
-    const capture = await captureOrder(orderId);
+    const capture = await captureOrder(orderId) as any;
 
     // Verify status
     if (capture.status === "COMPLETED") {
