@@ -15,20 +15,22 @@
     - [x] Create API routes for Ledger system (`/wallet/balance`, `/wallet/history`).
     - [x] Integrate PayPal SDK for coin purchases.
     - [x] Build the Blockchain Relayer service for gasless trading.
+- [x] **Frontend "Glow-up" (Issue #10 & #11)**:
+    - [x] Redesigned `MarketCard` with a premium look and progress bars.
+    - [x] Implemented `TradeDialog` for placing bets.
+    - [x] Integrated shadcn/ui components (Dialog, Progress, Tabs, Label).
 
 ## 🚀 Active / Next Tasks
 
 ### 1. Smart Contract Deployment (Issue #5)
-- [ ] Create `contracts/.env` with private keys and Amoy RPC.
+- [x] Install Foundry & setup environment.
+- [x] Verify build and run tests (`Market.t.sol`).
+- [x] Create `contracts/.env` template.
+- [ ] Fill `contracts/.env` with actual private keys and Amoy RPC.
 - [ ] Execute `Deploy.s.sol` on Polygon Amoy Testnet.
 - [ ] Verify contracts on Polygonscan.
 
-### 2. Frontend "Glow-up" & UI Implementation
-- [ ] Refactor `MarketCard` for a more premium look (visual probabilities, better spacing).
-- [ ] Implement actual "Trade" dialogs using the new FPMM logic.
-- [ ] Build the Trading Interface (#11) and Market Details (#10).
-
-### 3. Web3 Integration (#8 & #12)
+### 2. Web3 Integration (#8 & #12)
 - [ ] Integrate RainbowKit/wagmi for wallet connection.
 - [ ] Connect frontend to the deployed smart contracts on Amoy.
 
