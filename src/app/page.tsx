@@ -7,6 +7,7 @@ import { MarketFilters } from "@/components/market/MarketFilters";
 import { MarketList } from "@/components/market/MarketList";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Search, Bell, Menu, UserCircle } from "lucide-react";
 
 export default function Home() {
   const [category, setCategory] = useState("All");
@@ -18,56 +19,59 @@ export default function Home() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden border-b bg-card/30 py-16 px-6 sm:py-24">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl">
-           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px]" />
-           <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-emerald-500/10 rounded-full blur-[100px]" />
+    <div className="flex flex-col min-h-screen bg-[#090A0C] text-white selection:bg-[#048CFA]/30">
+      {/* Top Search/Filter Bar */}
+      <div className="sticky top-14 z-30 bg-[#090A0C]/80 backdrop-blur-xl border-b border-white/5 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+           <div className="flex items-center gap-6 overflow-x-auto no-scrollbar pb-1 w-full md:w-auto">
+              {["All", "Politics", "Crypto", "Sports", "Business", "Science"].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setCategory(cat)}
+                  className={`text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${
+                    category === cat ? "text-[#048CFA]" : "text-[#94A3B8] hover:text-white"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+           </div>
+           
+           <div className="relative w-full md:w-72">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8]" />
+              <input 
+                type="text"
+                placeholder="Search markets..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full bg-[#121418] border border-white/5 rounded-lg py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-[#048CFA]/50 transition-colors placeholder:text-[#94A3B8]/50 font-medium"
+              />
+           </div>
         </div>
-        
-        <div className="relative max-w-5xl mx-auto text-center space-y-6">
-          <Badge variant="outline" className="px-4 py-1.5 rounded-full bg-primary/5 text-primary border-primary/20 text-xs font-bold uppercase tracking-widest">
-            Next-Gen Prediction Markets
-          </Badge>
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.1]">
-            Predict the Future.<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500">Earn from your Knowledge.</span>
-          </h1>
-          <p className="text-muted-foreground text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
-            Trade on politics, sports, crypto and more. Simple, fast, and completely gasless with NextCase Coins.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-             <Button size="lg" className="h-14 px-8 rounded-2xl text-base font-bold shadow-xl shadow-primary/20 transition-all hover:translate-y-[-2px]">
-                Start Trading
-             </Button>
-             <Button size="lg" variant="outline" className="h-14 px-8 rounded-2xl text-base font-bold bg-background/50 backdrop-blur-sm transition-all hover:translate-y-[-2px]">
-                How it works
-             </Button>
-          </div>
-        </div>
-      </section>
+      </div>
 
-      {/* Main Content */}
-      <div className="flex-1 w-full max-w-7xl mx-auto py-12 px-6 sm:px-8">
-        <div className="flex flex-col gap-10">
-          <div className="flex flex-col sm:flex-row justify-between items-end gap-6">
+      {/* Main Content Area */}
+      <main className="flex-1 max-w-7xl mx-auto w-full py-8 px-6">
+        <div className="flex flex-col gap-8">
+          {/* Section Header */}
+          <div className="flex items-end justify-between border-b border-white/5 pb-6">
             <div className="space-y-1">
-               <h2 className="text-2xl font-bold tracking-tight">Active Markets</h2>
-               <p className="text-sm text-muted-foreground">Discover opportunities across various categories.</p>
+               <h2 className="text-xl font-bold tracking-tight text-white/90">
+                 {category === "All" ? "Featured Markets" : `${category} Markets`}
+               </h2>
+               <p className="text-xs font-medium text-[#94A3B8]">
+                 Real-time prediction probabilities based on market volume.
+               </p>
             </div>
-            
-            <MarketFilters
-              selectedCategory={category}
-              onCategoryChange={setCategory}
-              search={search}
-              onSearchChange={setSearch}
-            />
+            <div className="flex items-center gap-2 text-[10px] font-bold text-[#94A3B8] uppercase tracking-widest bg-white/5 px-3 py-1.5 rounded-md border border-white/5">
+               <span className="w-1.5 h-1.5 rounded-full bg-[#09B9A4]" />
+               Live Updates
+            </div>
           </div>
 
           <MarketList markets={markets} isLoading={isLoading} />
         </div>
-      </div>
+      </main>
     </div>
   );
 }

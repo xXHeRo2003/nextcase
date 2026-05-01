@@ -2,74 +2,81 @@ import { Market } from "@/types/market";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Progress, ProgressTrack, ProgressIndicator } from "@/components/ui/progress";
 import { format } from "date-fns";
-import { TrendingUp, Users } from "lucide-react";
 import { TradeDialog } from "./TradeDialog";
+import { cn } from "@/lib/utils";
 
 interface MarketCardProps {
   market: Market;
 }
 
 export function MarketCard({ market }: MarketCardProps) {
+  const yesOption = market.options.find(o => o.id === "yes") || market.options[0];
+  const noOption = market.options.find(o => o.id === "no") || market.options[1];
+
   return (
-    <Card className="group flex flex-col h-full hover:shadow-lg transition-all duration-300 border-border/50 hover:border-primary/30 overflow-hidden bg-card/50 backdrop-blur-sm">
-      <CardHeader className="pb-3">
-        <div className="flex justify-between items-center gap-2 mb-3">
-          <Badge variant="outline" className="text-[10px] uppercase tracking-wider font-semibold bg-primary/5 text-primary border-primary/20">
+    <Card className="bg-[#121418] border border-white/5 overflow-hidden transition-all duration-200 hover:border-white/10 group flex flex-col h-full rounded-xl">
+      <CardHeader className="p-4 space-y-3">
+        <div className="flex justify-between items-center">
+          <Badge variant="secondary" className="bg-[#1E2025] text-[#94A3B8] hover:bg-[#1E2025] border-none text-[10px] uppercase font-bold tracking-wider px-2 py-0.5">
             {market.category}
           </Badge>
-          <div className="flex items-center gap-3 text-[11px] font-medium text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <TrendingUp className="w-3 h-3 text-emerald-500" />
-              ${market.volume.toLocaleString()}
-            </div>
+          <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#94A3B8] tabular-nums">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#09B9A4] animate-pulse" />
+            ${(market.volume / 1000000).toFixed(1)}M Vol
           </div>
         </div>
-        <CardTitle className="text-base font-bold leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+        <CardTitle className="text-[15px] font-semibold leading-snug min-h-[44px] line-clamp-2 text-white/90 group-hover:text-white transition-colors">
           {market.title}
         </CardTitle>
       </CardHeader>
-      
-      <CardContent className="flex-1 pb-4">
-        <div className="space-y-4">
-          {market.options.map((option, idx) => (
-            <div key={option.id} className="space-y-1.5">
-              <div className="flex justify-between items-center text-xs font-semibold">
-                <span className="text-muted-foreground">{option.name}</span>
-                <span className={idx === 0 ? "text-emerald-500" : "text-rose-500"}>
-                  {option.probability}%
-                </span>
-              </div>
-              <Progress value={option.probability} className="h-1.5 w-full">
-                <ProgressTrack className="bg-muted/30">
-                  <ProgressIndicator className={idx === 0 ? "bg-emerald-500" : "bg-rose-500"} />
-                </ProgressTrack>
-              </Progress>
-            </div>
-          ))}
+
+      <CardContent className="px-4 pb-4 flex-1">
+        <div className="relative h-1 w-full bg-[#1E2025] rounded-full overflow-hidden mb-5">
+           <div 
+            className="absolute left-0 top-0 h-full bg-[#09B9A4] transition-all duration-500" 
+            style={{ width: `${yesOption.probability}%` }}
+           />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <TradeDialog 
+            market={market}
+            trigger={
+              <Button 
+                variant="outline" 
+                className="flex flex-col h-14 bg-[#09B9A4]/10 border-[#09B9A4]/20 hover:bg-[#09B9A4]/20 hover:border-[#09B9A4]/30 group/btn transition-all duration-200 rounded-lg"
+              >
+                <span className="text-[10px] font-bold uppercase text-[#09B9A4] tracking-wider mb-0.5">Bet Yes</span>
+                <span className="text-lg font-bold text-white tabular-nums">{yesOption.probability}%</span>
+              </Button>
+            }
+          />
+          <TradeDialog 
+            market={market}
+            trigger={
+              <Button 
+                variant="outline" 
+                className="flex flex-col h-14 bg-[#FF4D4D]/10 border-[#FF4D4D]/20 hover:bg-[#FF4D4D]/20 hover:border-[#FF4D4D]/30 group/btn transition-all duration-200 rounded-lg"
+              >
+                <span className="text-[10px] font-bold uppercase text-[#FF4D4D] tracking-wider mb-0.5">Bet No</span>
+                <span className="text-lg font-bold text-white tabular-nums">{noOption.probability}%</span>
+              </Button>
+            }
+          />
         </div>
       </CardContent>
 
-      <CardFooter className="pt-0 pb-4 px-6 flex flex-col items-stretch gap-3">
-        <div className="flex justify-between items-center text-[10px] text-muted-foreground/70 font-medium border-t border-border/40 pt-3">
-          <div className="flex items-center gap-1">
-             <Users className="w-3 h-3" />
-             2.4k traders
-          </div>
-          <div>
-            Ends {format(new Date(market.endDate), "MMM d, yyyy")}
-          </div>
-        </div>
-        
-        <TradeDialog 
-          market={market} 
-          trigger={
-            <Button size="sm" className="w-full font-bold shadow-sm transition-transform active:scale-95">
-              Place Bet
-            </Button>
-          } 
-        />
+      <CardFooter className="px-4 py-3 bg-white/[0.02] border-t border-white/5 flex justify-between items-center">
+         <div className="text-[10px] font-medium text-[#94A3B8] flex items-center gap-1">
+           Ends {format(new Date(market.endDate), "MMM d, yyyy")}
+         </div>
+         <div className="flex items-center gap-2">
+            <div className="w-5 h-5 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+               <span className="text-[8px] font-bold">NYT</span>
+            </div>
+            <span className="text-[9px] text-[#94A3B8] font-medium truncate max-w-[80px]">NY Times source</span>
+         </div>
       </CardFooter>
     </Card>
   );
