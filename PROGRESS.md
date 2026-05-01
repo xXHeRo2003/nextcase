@@ -1,6 +1,6 @@
 # NextCase Project Progress
 
-## 📅 Last Update: 2026-04-30
+## 📅 Last Update: 2026-05-01
 
 ## ✅ Completed Tasks (Phase 1)
 - [x] **Smart Contract Architecture**: Implemented `MarketFactory`, `Market`, and `OutcomeToken`.
@@ -9,6 +9,12 @@
 - [x] **Infrastructure**: Optimized `.gitignore`, configured `foundry.toml` with `via-ir` for complex deployments.
 - [x] **Frontend Basics**: Added `/profile` route to fix navigation errors.
 - [x] **Source Control**: Successfully pushed core logic to GitHub.
+- [x] **Backend Implementation (Issue #19 & #7)**: 
+    - [x] Setup Drizzle ORM and PostgreSQL connection.
+    - [x] Implement Auth.js (NextAuth) for user management.
+    - [x] Create API routes for Ledger system (`/wallet/balance`, `/wallet/history`).
+    - [x] Integrate PayPal SDK for coin purchases.
+    - [x] Build the Blockchain Relayer service for gasless trading.
 
 ## 🚀 Active / Next Tasks
 
@@ -17,17 +23,12 @@
 - [ ] Execute `Deploy.s.sol` on Polygon Amoy Testnet.
 - [ ] Verify contracts on Polygonscan.
 
-### 2. Backend & Virtual Coin System (Issue #19 & #7)
-- [ ] Setup Node.js/PostgreSQL backend foundation.
-- [ ] Implement the Ledger system for "NextCase Coins" (Centralized database tracking).
-- [ ] Define API endpoints for coin balance and transaction history.
-
-### 3. Frontend "Glow-up" & UI Implementation
+### 2. Frontend "Glow-up" & UI Implementation
 - [ ] Refactor `MarketCard` for a more premium look (visual probabilities, better spacing).
 - [ ] Implement actual "Trade" dialogs using the new FPMM logic.
 - [ ] Build the Trading Interface (#11) and Market Details (#10).
 
-### 4. Web3 Integration (#8 & #12)
+### 3. Web3 Integration (#8 & #12)
 - [ ] Integrate RainbowKit/wagmi for wallet connection.
 - [ ] Connect frontend to the deployed smart contracts on Amoy.
 

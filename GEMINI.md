@@ -22,11 +22,20 @@ Follow this guide to determine which agent to invoke for specific tasks:
 | :--- | :--- | :--- |
 | **Architectural Planning** | `project-manager` | `codebase_investigator` |
 | **Frontend/UI Implementation** | `react-expert` | `ui-ux-designer` / `frontend-expert` |
-| **Smart Contracts / Web3** | `backend-expert` | `security-expert` |
+| **Smart Contracts / Web3** | `blockchain-expert` | `security-expert` |
 | **API & Database Logic** | `backend-expert` | `security-expert` |
 | **DevOps & Deployment** | `devops-expert` | - |
 | **Testing & QA** | `test-architect` | - |
 | **Security Audits** | `security-expert` | - |
+
+### GitHub Issue Workflow
+
+Ich bearbeite Issues schrittweise nach folgendem Prozess:
+
+1. **Planung:** Für jedes Issue erstelle ich zuerst einen detaillierten Lösungsplan und lege fest, welche Experten-Agenten beteiligt sind.
+2. **Umsetzung:** Schritt-für-Schritt Bearbeitung des Issues unter Einbeziehung der gewählten Agenten.
+3. **Abschluss & Push:** Sobald ein Issue vollständig gelöst und verifiziert ist, wird das Issue auf GitHub als erledigt markiert und der fertige Stand mit einem Commit/Push auf GitHub hochgeladen.
+4. **Nächster Schritt:** Erst nach erfolgreichem Push widme ich mich dem nächsten Issue.
 
 ## Engineering Mandates
 
