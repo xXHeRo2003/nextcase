@@ -16,7 +16,7 @@
     - [x] **"Obsidian" Design System**: Deep dark mode (#090A0C) with professional trading terminal aesthetic.
     - [x] **MarketCard Redesign**: Functional trading instrument with integrated Yes/No action buttons and tabular figures.
     - [x] **Enhanced Navigation**: Refactored sidebar with topic filters and live coin balance display.
-    - [x] **Tailwind CSS 4 Integration**: Proper PostCSS configuration for the latest CSS framework version.
+    - [x] **Monorepo Migration**: Restructured the project into a Turborepo-based monorepo for better separation of frontend, backend (database), and contracts.
 
 ## 🚀 Active / Next Tasks
 

@@ -2,6 +2,9 @@
 .next/
 out/
 
+# Turborepo
+.turbo/
+
 # Dependencies
 node_modules/
 
@@ -15,6 +18,7 @@ node_modules/
 # Build outputs
 dist/
 build/
+*.tsbuildinfo
 
 # IDEs and editors
 .vscode/*
@@ -30,8 +34,8 @@ Thumbs.db
 # Gemini
 .gemini/tmp/
 
-# Foundry
-contracts/out/
-contracts/cache/
-contracts/broadcast/
-contracts/lib/
+# Foundry (Monorepo paths)
+packages/contracts/out/
+packages/contracts/cache/
+packages/contracts/broadcast/
+packages/contracts/lib/

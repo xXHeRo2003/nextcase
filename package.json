@@ -1,71 +1,26 @@
 {
   "name": "nextcase",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
+  "description": "NextCase Monorepo",
+  "private": true,
+  "packageManager": "npm@11.13.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test": "vitest run",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test",
     "format": "prettier --write .",
-    "contracts:build": "cd contracts && forge build",
-    "contracts:test": "cd contracts && forge test",
-    "contracts:fmt": "cd contracts && forge fmt"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xXHeRo2003/nextcase.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/xXHeRo2003/nextcase/issues"
-  },
-  "homepage": "https://github.com/xXHeRo2003/nextcase#readme",
-  "dependencies": {
-    "@auth/drizzle-adapter": "^1.11.2",
-    "@base-ui/react": "^1.4.1",
-    "@paypal/checkout-server-sdk": "^1.0.3",
-    "@paypal/paypal-server-sdk": "^2.3.0",
-    "@tailwindcss/postcss": "^4.2.4",
-    "@tanstack/react-query": "^5.100.6",
-    "bcryptjs": "^3.0.3",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "date-fns": "^4.1.0",
-    "drizzle-orm": "^0.45.2",
-    "lucide-react": "^1.14.0",
-    "next": "^16.2.4",
-    "next-auth": "^5.0.0-beta.31",
-    "next-themes": "^0.4.6",
-    "pg": "^8.20.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "shadcn": "^4.6.0",
-    "tailwind-merge": "^3.5.0",
-    "tw-animate-css": "^1.4.0",
-    "viem": "^2.48.7",
-    "zod": "^4.4.1"
+    "contracts:build": "npm run build --workspace=@nextcase/contracts",
+    "contracts:test": "npm run test --workspace=@nextcase/contracts",
+    "contracts:fmt": "npm run fmt --workspace=@nextcase/contracts"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^25.6.0",
-    "@types/pg": "^8.20.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "autoprefixer": "^10.5.0",
-    "drizzle-kit": "^0.31.10",
-    "eslint": "^9.39.4",
-    "eslint-config-next": "^16.2.4",
-    "postcss": "^8.5.13",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "tailwindcss": "^4.2.4",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
+    "turbo": "^2.9.7"
   }
 }
