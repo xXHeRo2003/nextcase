@@ -30,8 +30,33 @@ export function TradeDialog({ market, trigger }: TradeDialogProps) {
 
   const handleTrade = async () => {
     setIsPending(true);
-    // Logic for calling /api/v1/trade/buy will go here
-    setTimeout(() => setIsPending(false), 1500);
+    try {
+      const response = await fetch("/api/v1/trade/buy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          marketId: market.id,
+          outcomeIndex: selectedOption.index,
+          coinAmount: Number(amount),
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Trade failed");
+      }
+
+      // Success logic: e.g., show a toast or refresh data
+      console.log("Trade successful:", data);
+      window.location.reload(); // Refresh to see updated balance/pools
+    } catch (error: any) {
+      console.error("Trade Error:", error);
+      alert(error.message);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (

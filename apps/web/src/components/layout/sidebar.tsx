@@ -84,15 +84,11 @@ export function Sidebar() {
       </div>
 
       <div className="p-4 mt-auto border-t border-white/5">
-        <div className="bg-[#121418] rounded-xl p-4 border border-white/5">
-          <div className="flex items-center gap-2 mb-3">
-             <CircleDollarSign className="w-4 h-4 text-[#09B9A4]" />
-             <span className="text-xs font-bold text-white tabular-nums tracking-tight">1,250.00 COINS</span>
-          </div>
-          <button className="w-full py-2 text-[10px] font-bold bg-[#048CFA] hover:bg-[#048CFA]/90 text-white rounded-lg transition-colors uppercase tracking-widest">
-            Deposit
+        <Link href="/coins/purchase">
+          <button className="w-full py-2.5 text-[10px] font-bold bg-[#121418] hover:bg-[#1E2025] text-white border border-white/5 rounded-lg transition-colors uppercase tracking-widest">
+            Buy Coins
           </button>
-        </div>
+        </Link>
       </div>
     </aside>
   );

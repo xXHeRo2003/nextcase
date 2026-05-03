@@ -1,35 +1,33 @@
 # Project: NextCase
 
-NextCase is a Web3 trading platform inspired by Polymarket, built on the Polygon network. It features automated market makers (AMM), decentralized market creation, and a modern trading interface.
-
-## Monorepo Architecture
+NextCase is a prediction market platform inspired by Polymarket. It features automated market makers (AMM), virtual currency trading, and a modern terminal aesthetic.
+## Pure Web2 Architecture
 The project is organized as a Turborepo-based monorepo using NPM workspaces:
 
-- `apps/web`: Next.js Frontend (TypeScript, Tailwind CSS, shadcn/ui).
-- `packages/contracts`: Foundry Smart Contracts.
-- `packages/database`: Drizzle ORM, schema definitions, and migrations.
+- `apps/web`: Next.js Frontend & API (TypeScript, Tailwind CSS, shadcn/ui).
+- `packages/database`: Drizzle ORM, schema definitions (PostgreSQL).
 - `packages/shared`: Shared TypeScript types and utilities.
 
-### Economic Model & Payments
-- **Virtual Coin System:** Users purchase "NextCase Coins" managed in our database.
-- **User Experience:** No crypto-wallet or gas fees required for the user.
-- **On-Ramp:** Integration of PayPal for direct fiat-to-coin purchase.
-- **Betting:** Users place bets using virtual coins; backend manages the ledger and ensures payouts.
+### Economic Model & Trading
+- **Virtual Coin System:** Users purchase "NextCase Coins" (fiat-to-coin via PayPal) managed in our database.
+- **AMM Logic:** Markets use a Constant Product Invariant (FPMM) implemented directly in the backend (`MarketService.ts`).
+- **Authentication:** Standard Email/Password login via NextAuth (Credentials Provider).
+- **Performance:** Instant trades with 0 gas fees and no wallet required.
+- **Trust:** Secured via atomic SQL transactions and high-precision calculations (`decimal.js`).
 
 ## Core Technologies
 - **Frontend:** Next.js (TypeScript), Tailwind CSS, shadcn/ui.
-- **Web3:** Viem, Foundry (Smart Contracts).
 - **Backend:** Node.js, PostgreSQL (Drizzle ORM).
 - **Features:** AMM Liquidity Pools, Market Discovery, Portfolio Tracking.
+
 
 ## Development Workflow
 
 ### Useful Commands (Root)
 - `npm run dev`: Start the development server for the web app (via Turbo).
-- `npm run build`: Build all workspaces (Web app, database, and contracts).
+- `npm run build`: Build all workspaces (Web app and database).
 - `npm run test`: Run tests across all workspaces.
 - `npm run format`: Format the entire codebase using Prettier.
-- `npm run contracts:build`: Build only the smart contracts.
 
 ### Agent Usage
 Refer to this guide to determine which agent to invoke for specific tasks:

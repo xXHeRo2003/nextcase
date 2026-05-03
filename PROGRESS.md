@@ -3,39 +3,38 @@
 ## 📅 Last Update: 2026-05-01
 
 ## ✅ Completed Tasks
-- [x] **Smart Contract Architecture**: Implemented `MarketFactory`, `Market`, and `OutcomeToken`.
-- [x] **AMM Logic**: Developed `FixedProductMarketMaker` (FPMM) using a constant product invariant.
-- [x] **Foundry Suite**: Comprehensive tests and deployment preparation (Issue #5).
+- [x] **Web2 Migration**: Removed all blockchain dependencies and ported AMM logic to TypeScript.
 - [x] **Backend Foundation (Issue #19 & #7)**: 
     - [x] Node.js/PostgreSQL with Drizzle ORM.
-    - [x] NextAuth.js Integration (Credentials).
+    - [x] NextAuth.js Integration (Credentials Provider + JWT).
     - [x] Atomic Coin Ledger & transaction history.
-    - [x] PayPal SDK Integration for coin purchases.
-    - [x] Blockchain Relayer (Viem) for gasless trading.
-- [x] **High-Fidelity UI Overhaul (Issue #10 & #11)**:
-    - [x] **"Obsidian" Design System**: Deep dark mode (#090A0C) with professional trading terminal aesthetic.
-    - [x] **MarketCard Redesign**: Functional trading instrument with integrated Yes/No action buttons and tabular figures.
-    - [x] **Enhanced Navigation**: Refactored sidebar with topic filters and live coin balance display.
-    - [x] **Monorepo Migration**: Restructured the project into a Turborepo-based monorepo for better separation of frontend, backend (database), and contracts.
+    - [x] PayPal SDK Integration (Backend Service).
+- [x] **Live Data Integration (Phase 2)**:
+    - [x] Database Seeding for Markets & Pools.
+    - [x] Frontend connected to PostgreSQL via Server Actions.
+    - [x] Real-time probability calculations from Liquidity Pools.
+    - [x] Functional "Buy" trading connected to `MarketService`.
+- [x] **Authentication UI**:
+    - [x] Custom Login page.
+    - [x] Dynamic Header with balance display and session management.
+- [x] **Branding & UI Polish**:
+    - [x] Integrated Logo and Full-Logo assets.
+    - [x] Implemented "Obsidian Glow" effect for header branding.
+    - [x] Configured optimized favicons and icons.
+    - [x] Cleaned up sidebar UI for a more professional look.
 
 ## 🚀 Active / Next Tasks
 
-### 1. Smart Contract Deployment (Issue #5)
-- [x] Environment and Build verified.
-- [ ] Final on-chain execution on Polygon Amoy (Requires User Keys).
-
-### 2. Web3 Integration (Issue #8 & #12)
-- [ ] Integrate RainbowKit/wagmi for wallet connection.
-- [ ] Connect "Connect Wallet" button to actual provider.
-
-### 3. Feature: Live Data Integration
-- [ ] Transition from Mock Data to real Backend/Subgraph API.
-- [ ] Implement live probability updates.
+### 1. Fine-Tuning & UX (Current)
+- [ ] Implement user portfolio and positions view.
+- [ ] Add toast notifications for trade success/failure.
+- [ ] Refine mobile responsiveness.
 
 ## 📝 Technical Notes
 - **UI Architecture**: Tailwind CSS 4 + PostCSS + Shadcn/ui (Base UI).
-- **Economic Model**: Hybrid Virtual Coin Ledger -> On-chain Settlement.
+- **Economic Model**: Pure Virtual Coin Ledger (Web2).
 - **Key Files**: 
+    - `src/lib/services/market.ts` (Core Trading Service)
+    - `src/lib/services/market-logic.ts` (AMM Mathematics)
+    - `src/lib/services/market-queries.ts` (Database Queries)
     - `src/app/globals.css` (Design System)
-    - `src/components/market/MarketCard.tsx` (Trading UI)
-    - `src/lib/services/ledger.ts` (Financial Core)

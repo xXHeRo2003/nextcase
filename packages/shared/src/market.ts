@@ -3,6 +3,7 @@ export type Category = "Crypto" | "Politics" | "Sports" | "Science" | "Other";
 
 export interface MarketOption {
   id: string;
+  index: number;
   name: string;
   probability: number; // 0 to 100
 }

@@ -11,8 +11,9 @@ interface MarketCardProps {
 }
 
 export function MarketCard({ market }: MarketCardProps) {
-  const yesOption = market.options.find(o => o.id === "yes") || market.options[0];
-  const noOption = market.options.find(o => o.id === "no") || market.options[1];
+  // Find "Yes"/"No" by name or use indices 0 and 1
+  const yesOption = market.options.find(o => o.name.toLowerCase() === "yes") || market.options[0];
+  const noOption = market.options.find(o => o.name.toLowerCase() === "no") || market.options[1] || market.options[0];
 
   return (
     <Card className="bg-[#121418] border border-white/5 overflow-hidden transition-all duration-200 hover:border-white/10 group flex flex-col h-full rounded-xl">

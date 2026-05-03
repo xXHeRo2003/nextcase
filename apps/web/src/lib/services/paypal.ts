@@ -1,57 +1,55 @@
-import {
-  CheckoutPaymentIntent,
-  Client,
-  Environment,
-  LogLevel,
-  OrdersController,
-} from "@paypal/paypal-server-sdk";
+import checkoutNodeJssdk from '@paypal/checkout-server-sdk';
 
-const clientId = process.env.PAYPAL_CLIENT_ID || "";
-const clientSecret = process.env.PAYPAL_CLIENT_SECRET || "";
+export const COIN_CONVERSION_RATE = 100; // 100 coins per 1 USD
 
-const client = new Client({
-  clientCredentialsAuthCredentials: {
-    oAuthClientId: clientId,
-    oAuthClientSecret: clientSecret,
-  },
-  timeout: 0,
-  environment: Environment.Sandbox,
-  logging: {
-    logLevel: LogLevel.Info,
-    logRequest: { logBody: true },
-    logResponse: { logHeaders: true },
-  },
-});
+function environment() {
+  const clientId = process.env.PAYPAL_CLIENT_ID || '';
+  const clientSecret = process.env.PAYPAL_CLIENT_SECRET || '';
 
-const ordersController = new OrdersController(client);
+  if (process.env.NODE_ENV === 'production') {
+    return new checkoutNodeJssdk.core.LiveEnvironment(clientId, clientSecret);
+  }
+  return new checkoutNodeJssdk.core.SandboxEnvironment(clientId, clientSecret);
+}
 
-export const COIN_CONVERSION_RATE = 100; // 1 EUR = 100 Coins
+export function client() {
+  return new checkoutNodeJssdk.core.PayPalHttpClient(environment());
+}
 
+/**
+ * Creates a PayPal order for a specific amount of coins.
+ * @param coins The number of NextCase Coins to purchase.
+ * @returns The PayPal order result.
+ */
 export async function createOrder(coins: number) {
   const amount = (coins / COIN_CONVERSION_RATE).toFixed(2);
   
-  const { body } = await ordersController.createOrder({
-    body: {
-      intent: CheckoutPaymentIntent.Capture,
-      purchaseUnits: [
-        {
-          amount: {
-            currencyCode: "EUR",
-            value: amount,
-          },
-          description: `Purchase of ${coins} NextCase Coins`,
-        },
-      ],
-    },
+  const request = new checkoutNodeJssdk.orders.OrdersCreateRequest();
+  request.prefer("return=representation");
+  request.requestBody({
+    intent: 'CAPTURE',
+    purchase_units: [{
+      amount: {
+        currency_code: 'USD',
+        value: amount
+      }
+    }]
   });
 
-  return body;
+  const response = await client().execute(request);
+  return response.result;
 }
 
+/**
+ * Captures a PayPal order by its ID.
+ * @param orderId The PayPal order ID to capture.
+ * @returns The PayPal capture result.
+ */
 export async function captureOrder(orderId: string) {
-  const { body } = await ordersController.captureOrder({
-    id: orderId,
-  });
+  const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderId);
+  // @ts-ignore - PayPal SDK types are sometimes overly restrictive for empty body
+  request.requestBody({});
 
-  return body;
+  const response = await client().execute(request);
+  return response.result;
 }

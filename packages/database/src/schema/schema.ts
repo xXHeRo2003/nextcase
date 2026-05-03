@@ -1,4 +1,5 @@
 import { pgTable, uuid, text, decimal, timestamp, integer, jsonb, pgEnum, primaryKey, unique } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 
 export const transactionTypeEnum = pgEnum('transaction_type', ['PURCHASE', 'BET_BUY', 'BET_SELL', 'REWARD']);
 export const transactionStatusEnum = pgEnum('transaction_status', ['PENDING', 'COMPLETED', 'FAILED']);
@@ -83,16 +84,73 @@ export const transactions = pgTable('transactions', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
+export const marketStatusEnum = pgEnum('market_status', ['OPEN', 'CLOSED', 'RESOLVED']);
+
+export const markets = pgTable('markets', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  question: text('question').notNull(),
+  description: text('description'),
+  category: text('category'),
+  status: marketStatusEnum('status').default('OPEN').notNull(),
+  resolutionDate: timestamp('resolution_date').notNull(),
+  winningOutcomeIndex: integer('winning_outcome_index'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const marketOutcomes = pgTable('market_outcomes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  marketId: uuid('market_id')
+    .references(() => markets.id, { onDelete: 'cascade' })
+    .notNull(),
+  name: text('name').notNull(),
+  index: integer('index').notNull(),
+});
+
+export const marketPools = pgTable('market_pools', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  marketId: uuid('market_id')
+    .references(() => markets.id, { onDelete: 'cascade' })
+    .notNull(),
+  outcomeIndex: integer('outcome_index').notNull(),
+  liquidity: decimal('liquidity', { precision: 40, scale: 18 }).default('100.00').notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table) => ({
+  uniquePool: unique('unique_pool').on(table.marketId, table.outcomeIndex),
+}));
+
 export const userPositions = pgTable('user_positions', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
-  marketAddress: text('market_address').notNull(),
+  marketId: uuid('market_id')
+    .references(() => markets.id, { onDelete: 'cascade' })
+    .notNull(),
   outcomeIndex: integer('outcome_index').notNull(),
-  shares: decimal('shares', { precision: 20, scale: 6 }).notNull(),
+  shares: decimal('shares', { precision: 40, scale: 18 }).notNull(),
   totalInvested: decimal('total_invested', { precision: 20, scale: 2 }).notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 }, (table) => ({
-  uniquePosition: unique('unique_position').on(table.userId, table.marketAddress, table.outcomeIndex),
+  uniquePosition: unique('unique_position').on(table.userId, table.marketId, table.outcomeIndex),
+}));
+
+// --- Relations ---
+
+export const marketRelations = relations(markets, ({ many }) => ({
+  outcomes: many(marketOutcomes),
+  pools: many(marketPools),
+}));
+
+export const marketOutcomeRelations = relations(marketOutcomes, ({ one }) => ({
+  market: one(markets, {
+    fields: [marketOutcomes.marketId],
+    references: [markets.id],
+  }),
+}));
+
+export const marketPoolRelations = relations(marketPools, ({ one }) => ({
+  market: one(markets, {
+    fields: [marketPools.marketId],
+    references: [markets.id],
+  }),
 }));

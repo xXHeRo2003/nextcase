@@ -22,6 +22,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "decimal.js": "^10.6.0",
     "drizzle-orm": "^0.45.2",
     "lucide-react": "^1.14.0",
     "next": "^16.2.4",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^25.6.0",
+    "@types/paypal__checkout-server-sdk": "^1.0.8",
     "@types/pg": "^8.20.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

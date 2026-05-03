@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchMarkets } from "@/lib/mock-data";
+import { fetchLiveMarkets } from "@/app/actions/markets";
 import { MarketFilters } from "@/components/market/MarketFilters";
 import { MarketList } from "@/components/market/MarketList";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,7 @@ export default function Home() {
 
   const { data: markets, isLoading } = useQuery({
     queryKey: ["markets", category, search],
-    queryFn: () => fetchMarkets(category, search),
+    queryFn: () => fetchLiveMarkets(category, search),
   });
 
   return (

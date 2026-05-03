@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Sidebar } from "@/components/layout/sidebar";
 import { QueryProvider } from "@/providers/query-provider";
+import { AuthProvider } from "@/providers/auth-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +20,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "NextCase",
-  description: "Next.js Frontend Foundation",
+  description: "NextCase - Prediction Market Platform",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -33,16 +37,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#090A0C] text-white`}
         style={{ backgroundColor: '#090A0C', color: 'white', minHeight: '100vh' }}
       >
-        <QueryProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <div className="flex flex-1">
-              <Sidebar />
-              <main className="flex-1 overflow-hidden">{children}</main>
+        <AuthProvider>
+          <QueryProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
+              <div className="flex flex-1">
+                <Sidebar />
+                <main className="flex-1 overflow-hidden">{children}</main>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-        </QueryProvider>
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );
